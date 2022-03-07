@@ -13,3 +13,4 @@ tar cfz ../../control.tar.gz .
 cd ../..
 gzip data.tar
 COPYFILE_DISABLE=1 tar cfz iperfspeed_0.6_all.ipk control.tar.gz data.tar.gz debian-binary
+rm -rf data.tar.gz control.tar.gz *.deb
