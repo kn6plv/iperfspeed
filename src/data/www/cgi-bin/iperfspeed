@@ -1,0 +1,97 @@
+#!/usr/bin/lua
+
+require("aredn.http")
+require('luci.http')
+require('luci.sys')
+require('nixio')
+local html = require("aredn.html")
+
+local query = {}
+if os.getenv("QUERY_STRING") ~= "" or os.getenv("REQUEST_METHOD") == "POST" then
+    local request = luci.http.Request(luci.sys.getenv(),
+        function()
+            local v = io.read(1024)
+            if not v then
+                io.close()
+            end
+            return v
+        end
+    )
+    query = request:formvalue()
+end
+
+if query.action == "run_client" then
+
+    -- TODO scrub query.server for injection attacks
+    if not query.server:match("^[a-zA-Z0-9%.%-]+$") then
+		print("Invalid Request")
+    else
+        os.execute("iperf3 -c " .. query.server .. " 2>&1 > /tmp/iperf-results")
+        for line in io:line("/tmp/iperf-results")
+        do
+            print(line)
+        end
+    end
+
+elseif query.action == "start_server" then
+    
+    print("Access-Control-Allow-Origin: *\r")
+    print("Content-type: text/plain\r")
+    print("\r")
+    print("OK")
+    os.execute("killall iperf3;iperf3 -D -s")
+
+elseif query.action == "stop_server" then
+
+    print("Access-Control-Allow-Origin: *\r")
+    print("Content-type: text/plain\r")
+    print("\r")
+    print("OK")
+    os.execute("killall iperf3")
+
+elseif query.action == "previous_tests" then
+
+    local json = ""
+    if nixio.fs.stat("/www/iperfspeed/tests.log") then
+        for line in io.lines("/www/iperfspeed/tests.log")
+        do
+            local time, server, client, result = line:match("^(.+)\t(.+)\t(.+)\t(.+)$")
+            json = string.format([[{"epoch":%s,"server":"%s","client":"%s","result":"%s"},]], time, server, client, result) .. json
+        end
+    end
+    print("Content-type: application/json\r")
+    print("\r")
+    print("[" .. json:sub(1, #json-1) .. "]")
+
+elseif query.action == "test_results" then
+
+    local f = io.open("/www/iperfspeed/tests.log", "a")
+    if f then
+        f:write(string.format("%d\t%s\t%s\t%s/sec\n", os.time(), query.server, query.client, query.result))
+        f:close()
+    end
+    print("Content-type: text/plain\r")
+    print("\r")
+    print("OK")
+
+elseif query.action == "nodes" then
+
+    local json = ""
+    for line in io.lines("/var/run/services_olsr")
+    do
+        local server = line:match("^http://(.*):8080/iperfspeed|")
+        if server then
+            json = json .. string.format([[{"node":"%s"},]], server)
+        end
+    end
+    print("Content-type: application/json\r")
+    print("\r")
+    print("[" .. json:sub(1, #json-1) .. "]")
+
+else
+
+    print("Content-type: text/plain\r")
+    print("\r")
+    print("No action")
+
+end

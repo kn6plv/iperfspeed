@@ -1,0 +1,10 @@
+Package: iperfspeed
+Version: 0.6.0
+Depends: iperf3
+Provides:
+Source: package/iperfspeed
+Section: net
+Priority: optional
+Maintainer: Trevor Paskett (K7FPV)
+Architecture: all
+Description: Web iperf interface to speed test between AREDN nodes

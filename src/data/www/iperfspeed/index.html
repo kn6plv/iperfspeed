@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Iperf Speed Test
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0, user-scalable=no"/>
+        <meta name="robots" content="noindex">
+        <link href="skeleton.css" rel="stylesheet"/>
+        <link href="style.css" rel="stylesheet"/>
+        <meta http-equiv="cache-control" content="max-age=0" />
+        <meta http-equiv="cache-control" content="no-cache" />
+        <meta http-equiv="expires" content="0" />
+        <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+        <meta http-equiv="pragma" content="no-cache" />
+    </head>
+    <body class="has-docked-nav">
+        <div class="container" id="test-container">
+            <div class="row">
+                <div class="tweleve columns">
+                    <div class="panel" id="message-panel">
+                        <div class="panel-header">
+                            Run a Iperf Speed Test
+                        </div>
+                        <div class="panel-body" id="test-panel-body">
+                            <form>
+                                <label for="server" class="test-label">
+                                    Server:
+                                </label>
+                                <select id="server"></select>
+                                <label for="client" class="test-label">
+                                    Client:
+                                </label>
+                                <select id="client"></select>
+                                <button id="submit-test" class="button-primary test-button">
+                                    Run Test
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="tweleve columns">
+                    <div class="panel">
+                        <div class="panel-header">
+                            Test Results
+                        </div>
+                        <div class="panel-body" id="test-result">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="tweleve columns">
+                    <div class="panel">
+                        <div class="panel-header">
+                            Previous Tests
+                        </div>
+                        <div class="panel-body">
+                            <table class="u-full-width message" id="message-parent-table">
+                                <thead id="message-header">
+                                    <tr>
+                                        <th>
+                                            Time
+                                        </th>
+                                        <th>
+                                            Server
+                                        </th>
+                                        <th>
+                                            Client
+                                        </th>
+                                        <th>
+                                            Result
+                                        </th>
+                                        <th>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tests-table">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="tweleve columns center">
+                    <div id="copyright">
+                        Iperf Speed Test v0.6 Copyright &copy;
+                        <a href="http://www.trevorsbench.com">
+                            Trevor Paskett - K7FPV
+                        </a>. Contrib by KE0PSL &amp; KN6PLV. 
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="jquery-2.2.0.min.js">
+        </script>
+        <script src="iperf.js">
+        </script>
+    </body>
+</html>

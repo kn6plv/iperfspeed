@@ -1,0 +1,5 @@
+#!/bin/sh
+
+mkdir -p /www/iperfspeed
+
+exit 0
