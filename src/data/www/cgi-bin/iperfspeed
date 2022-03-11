@@ -1,10 +1,8 @@
 #!/usr/bin/lua
 
-require("aredn.http")
 require('luci.http')
 require('luci.sys')
 require('nixio')
-local html = require("aredn.html")
 
 local query = {}
 if os.getenv("QUERY_STRING") ~= "" or os.getenv("REQUEST_METHOD") == "POST" then
