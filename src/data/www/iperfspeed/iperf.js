@@ -1,4 +1,5 @@
 var results = '';
+var aredn_domain = ".local.mesh";
 
 $(function() {
     $('#submit-test').on('click', function(e) {
@@ -57,7 +58,7 @@ function show_results(txt) {
 function run_client(client, server) {
     show_results("Starting iperf client");
     $.ajax({
-        url: 'http://' + client + ':8080/cgi-bin/iperfspeed?action=run_client&server=' + server + "&client=" + client,
+        url: 'http://' + client + aredn_domain + ':8080/cgi-bin/iperfspeed?action=run_client&server=' + server + "&client=" + client,
         type: "GET",
         cache: false,
         timeout: 60000,    
@@ -104,7 +105,7 @@ function run_test(client, server) {
     // Start iperf
     show_results("Starting iperf server");
     $.ajax({
-        url: 'http://' + server + ':8080/cgi-bin/iperfspeed?action=start_server',
+        url: 'http://' + server + aredn_domain + ':8080/cgi-bin/iperfspeed?action=start_server',
         type: "GET",
         dataType: "text",
         context: this,
@@ -121,7 +122,7 @@ function run_test(client, server) {
 
 function stop_server(host) {
     $.ajax({
-        url: 'http://' + host + ':8080/cgi-bin/iperfspeed?action=stop_server',
+        url: 'http://' + host + aredn_domain + ':8080/cgi-bin/iperfspeed?action=stop_server',
         type: "GET",
         dataType: "text",
         context: this,
