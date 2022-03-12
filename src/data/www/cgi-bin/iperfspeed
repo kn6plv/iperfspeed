@@ -20,12 +20,15 @@ end
 
 if query.action == "run_client" then
 
+    print("Access-Control-Allow-Origin: *\r")
+    print("Content-type: text/plain\r")
+    print("\r")
     -- TODO scrub query.server for injection attacks
     if not query.server:match("^[a-zA-Z0-9%.%-]+$") then
-		print("Invalid Request")
+        print("Invalid Request")
     else
         os.execute("iperf3 -c " .. query.server .. " 2>&1 > /tmp/iperf-results")
-        for line in io:line("/tmp/iperf-results")
+        for line in io.lines("/tmp/iperf-results")
         do
             print(line)
         end
