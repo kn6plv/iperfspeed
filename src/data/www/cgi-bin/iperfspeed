@@ -78,14 +78,20 @@ elseif query.action == "test_results" then
 elseif query.action == "nodes" then
 
     local json = {}
+    local me = nil
     for line in io.lines("/var/run/services_olsr")
     do
         local server = line:match("^http://(.*):8080/iperfspeed|")
         if server then
-            json[#json + 1] = string.format([[{"node":"%s"}]], server)
+            if not me then
+                me = string.format([[{"node":"%s"}]], server)
+            else
+                json[#json + 1] = string.format([[{"node":"%s"}]], server)
+            end
         end
     end
     table.sort(json)
+    table.insert(json, 1, me)
     print("Content-type: application/json\r")
     print("\r")
     print("[")
