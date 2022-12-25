@@ -1,5 +1,5 @@
 Package: iperfspeed
-Version: 0.6-lua
+Version: 0.7
 Depends: iperf3
 Provides:
 Source: package/iperfspeed

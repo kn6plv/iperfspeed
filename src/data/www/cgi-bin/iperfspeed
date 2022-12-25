@@ -1,12 +1,11 @@
 #!/usr/bin/lua
 
 require('luci.http')
-require('luci.sys')
 require('nixio')
 
 local query = {}
 if os.getenv("QUERY_STRING") ~= "" or os.getenv("REQUEST_METHOD") == "POST" then
-    local request = luci.http.Request(luci.sys.getenv(),
+    local request = luci.http.Request(nixio.getenv(),
         function()
             local v = io.read(1024)
             if not v then
