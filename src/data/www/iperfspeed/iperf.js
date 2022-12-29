@@ -103,6 +103,8 @@ function run_client(client, server) {
 
 function run_test(client, server) {
     // Start iperf
+    show_results("Client: " + client);
+    show_results("Server: " + server);
     show_results("Starting iperf server");
     $.ajax({
         url: 'http://' + server + aredn_domain + ':8080/cgi-bin/iperfspeed?action=start_server',
